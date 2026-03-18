@@ -366,9 +366,43 @@ function sum_3 (x,y,z){
     return x+y+z;
 }
 
-var arr_3 = [6,6,8];
+var arr_3 = [1,2,3];
 
 console.log(sum_3(...arr_3)); // spread operator, same as sum_3(arr_3[0], arr_3[1], arr_3[2])
+
+var arr_6 = [...arr_3,4,5,6];
+console.log(arr_6);
+
+var more_info = {
+    location: 'US',
+    gender: 'M'
+}
+
+var person_more_info = {...person, ...more_info}
+console.log(person_more_info);
+
+function f(...args) {
+    console.log(args)
+    return;
+}
+
+f(1,2,3,4);
+
+console.log('****************');
+
+// array
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
