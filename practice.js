@@ -388,22 +388,104 @@ function f(...args) {
 
 f(1,2,3,4);
 
+arr_5 = [...'12345']
+
 console.log('****************');
 
-// array
+
+// deep copy and shallow copy: slice/concat/.../Array.from()
+
+var myarray = ['a', 'b', 'c', 'd', 'e', [1, 2 ,3]];
+new_array = myarray.slice();
+myarray[0] = 'z';
+myarray[5][3] = 4;
+console.log(myarray);
+console.log(new_array);  // affect the array before/after copy
 
 
+var a_1 = [1,2,3,4,5,[1,2,3]]
+a_2 = JSON.parse(JSON.stringify(a_1));
+a_1[0] = 'z';
+a_1[5][3] = 4;
+console.log(a_1);
+console.log(a_2);  // not affect the array before/after copy
+
+console.log('****************');
+
+// CUAD
+myarray = ['a', 'b', 'c', 'd', 'e', [1, 2 ,3]];
+myarray.push('f', 33, [4, 5, 6], {name: 'cook'});
+console.log(myarray);
+myarray.pop();
+myarray.pop();
+myarray.pop();
+console.log(myarray);
+myarray.unshift('z','x','c');
+console.log(myarray);
+myarray.shift();
+myarray.shift();
+console.log(myarray);
+myarray.splice(2, 0, 'y', 'w'); // at index 2, delete 0 element, insert 'y' and 'w'
+console.log(myarray);
+
+console.log('****************');
+// forEach;
+var n_arr = [5,55,555,5555,55555];
+n_arr.forEach(function (value, index, array){
+    console.log(value, index, array);
+    }
+)
+
+// map same as python
+
+var doubled_arr = n_arr.map(function (value, index, array){
+    return 2 * value;
+})
+console.log(doubled_arr);
+console.log('****************');
 
 
+// filter like map, return in maps if item > n; return item.
+
+// reduce
+
+var _2d_arr = [[1,2,3],[4,5,6],[7,8,9]];
+var _1d_arr = _2d_arr.reduce(function (accumulator, currentValue){
+    return accumulator.concat(currentValue);
+}, [])
+console.log(_1d_arr);
+console.log('****************');
+
+// find
+var aaa = [2,3,5,7,11,13,17,19,23,29];
+var res_aaa = aaa.find(function (value){
+    return value > 10;
+})
+console.log(res_aaa); // find the first value > 10
+
+fd_in = aaa.findIndex(e => e > 10);
+console.log(fd_in);
+
+console.log(aaa.indexOf(19));
+console.log(aaa.includes(1));
+
+console.log('****************');
+
+// slice & concat & sort & reverse & join & toString
+var arr_7 = [3,1,4,1,5,9];
+console.log(arr_7.slice(2,5)); // slice from index 2 to 4
+console.log(arr_7.concat([2,6,5])); // concat two arrays
+console.log('****************');
+console.log(arr_7.sort()); // sort the array, but not sort number correctly
+console.log(arr_7.sort((a,b) => a - b)); // sort number correctly
 
 
+console.log('****************');
+console.log(arr_7.reverse()); // reverse the array
+console.log(arr_7.join('-')); // join the array with '-'
+console.log(arr_7.toString()); // convert the array to string
 
-
-
-
-
-
-
+console.log('****************');
 
 
 
