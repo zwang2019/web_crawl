@@ -472,13 +472,12 @@ console.log(aaa.includes(1));
 console.log('****************');
 
 // slice & concat & sort & reverse & join & toString
-var arr_7 = [3,1,4,1,5,9];
+var arr_7 = [3,1,4,1,5,9,555,11];
 console.log(arr_7.slice(2,5)); // slice from index 2 to 4
 console.log(arr_7.concat([2,6,5])); // concat two arrays
 console.log('****************');
 console.log(arr_7.sort()); // sort the array, but not sort number correctly
 console.log(arr_7.sort((a,b) => a - b)); // sort number correctly
-
 
 console.log('****************');
 console.log(arr_7.reverse()); // reverse the array
@@ -488,9 +487,22 @@ console.log(arr_7.toString()); // convert the array to string
 console.log('****************');
 
 
+// debugger
+
+function S(a,b){
+    let sum = a + b;
+    // debugger;
+    return sum;
+}
+
+res_d = S(1,1);
+console.log(res_d);
 
 
-
-
-
+for (let i=0;i<10;i++){
+    if (i === 5){
+        debugger;
+    }
+    console.log(i);
+}
 
