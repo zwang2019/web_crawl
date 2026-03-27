@@ -4,16 +4,127 @@
     <meta charset="UTF-8">
     <title>CSS Learn</title>
     <style>
-        selector {
-            property1: value1;
-            property2: value2;
+        /* element selector */
+        h1,h2 {
+            color: violet;
         }
+        /* id selector */
+        #no2test{
+            color: aqua;
+        }
+        /* class selector */
+        .test{
+            color: yellow;
+        }
+        /* multi classes with label */
+        p.test.test4{
+            color: crimson;
+        }
+        /*  */
+        .test5{
+            color: lightslategrey;
+        }
+        /* select all p inside div */
+        div p {
+            color: saddlebrown;
+        }
+        /* select all p whose father is div and grandfather is also div */
+        div > div > p {
+            color: lightcoral;
+        }
+
+        h3:hover{
+            color: green;
+        }
+
+        button:active{
+            color: darkorange;
+        }
+
+        input[type='text']{
+            color: yellowgreen;
+        }
+
+        p[defdef='hello']{
+            color: darkblue;
+        }
+
+        p[csscss='box']{
+            color: maroon;
+            width: 300px;
+            height: 300px;
+            padding: 10px 20px 30px 100px;
+            background: gold;
+            border: 5px dashed black;
+            font-size: 20px;
+            font-family: Times New Roman,KaiTi,serif;
+        }
+        /*  */
+        /*  */
+
+
     </style>
-    <link rel="stylesheet" href="./practice.css">
+    <!-- <link rel="stylesheet" href="./practice.css"> --> <!-- link: style loading and page loading are at same time, import: style loading after page loading -->
+    <!-- <style>
+        @import url('./practice.css'); -->
+    </style>
 </head>
     <body>
-        <p style="">
-            test
+        <h1>CSS Learn</h1>
+        <p style="color: darkorange">
+            test1
         </p>
+        <p id="no2test">
+            test2
+        </p>
+        <p class="test test3">
+            test3
+        </p>
+        <p class="test test4">
+            test4
+        </p>
+        <p class="test test5">
+            test5
+        </p>
+
+        <div>
+            <div>
+                <div>
+                    <p> div div div p</p>
+                </div>
+            </div>
+            <p>
+                p
+            </p>
+            <a href="https://www.google.com/">
+                a
+            </a>
+        </div>
+
+        <h1> H1 </h1>
+        <h2> H2 </h2>
+        <h3> H3: when mouse pass it, change color</h3>
+        <button> when click it, change color </button>
+        <input type="text" value="input text">
+        <input type="password" value="input password">
+        <input type="submit" value="submit">
+        <input type="reset" value="reset">
+        <p defdef = 'hello'>
+            world
+        </p>
+
+        <p csscss = 'box'>
+            length:
+            <br>
+            1px = 1/96 inch
+            <br>
+            1in = 96px = 2.54cm
+            <br>
+            楷体
+
+
+
+        </p>
+
     </body>
 </html>
