@@ -6,13 +6,45 @@
 </head>
     <body>
     <h1> JS Learning</h1>
+    <!-- import a js -->
+    <script src="./js_learn.js"></script>
+    <!-- run a js -->
     <script>
+        a();
+    </script>
+    <p onclick="console.log('Clicked')"> Click here </p>
+    <p id="click" onclick="a()"> Hello </p>
+    <script>
+        // window.alert('Virus Alert');
 
+        function close_win(){
+            window.close();
+        }
+        function welcome(wel){
+            console.log(wel);
+        }
 
+        if (window.confirm('Are you over 18 years old?')){
+            setTimeout(welcome, 10, 'User confirmed they are over 18');
+        }
+        else{
+            console.log('User cancelled');
+            window.open("https://www.google.com");
+            setTimeout(close_win, 10);
+        }
+
+        var inter_id = setInterval(welcome, 1000, 'hi')
+        console.log('Interval ID:', inter_id);
+        setTimeout(() => clearInterval(inter_id), 5000);
+
+        //var name = window.prompt('What is your name?');
+        //console.log(name);
+
+        var window_width = window.innerWidth
+        var window_height = window.innerHeight
+        console.log(`Window dimensions: ${window_width}x${window_height}`);
 
     </script>
-
-
 
     </body>
 </html>
