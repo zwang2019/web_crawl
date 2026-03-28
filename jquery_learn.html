@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-4.0.0.js"></script>
+    <script>
+        // original JavaScript code
+        // window.onload = function () {
+        //     var get_p1 = document.getElementById("p1");
+        //     alert(`${get_p1.innerText}`);
+        // }
+
+        // jQuery code
+        // $(document).ready(function () {
+        //     var get_p1 = $("#p1");
+        //     alert(`${get_p1.text()}`);
+        // });
+
+        // jQuery code 2
+        $(function () {
+            var get_p1 = $("#p1");
+            alert(`${get_p1.text()}`);
+        });
+
+
+    </script>
+</head>
+    <body>
+        <p id="p1"> Lorem ipsum </p>
+
+        <script>
+            $.ajax(
+                {
+                    url:"./ajax_json.json",
+                    method:"POST",
+                    dataType:"json",
+                    headers: {
+                        "headers":"test"
+                    },
+                    data:JSON.stringify({
+                        "key1":"value1",
+                        "key2":"value2",
+                        "key3":"value3",
+                        "key4":"value4"
+                        }
+                    ),
+                    success:function (data, status){
+                        console.log(data);
+                        console.log(status);
+                    },
+                    error:function (xhr,status,error){
+                        console.log(error);
+                    },
+                    async:true,
+                }
+            )
+        </script>
+    </body>
+</html>
