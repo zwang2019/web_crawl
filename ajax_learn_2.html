@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+  <body>
+  <button type="button" id="btn" onclick="req();"> Request </button>
+  <script>
+      function req(){
+          const xhr = new XMLHttpRequest();
+          xhr.open('POST','./ajax_json.json',true); // when true: Asynchronous request, false: Synchronous request
+          xhr.timeout = 1000;
+          xhr.responseType = 'json'
+          xhr.setRequestHeader('hello','world')
+          let data = {"id":0, "account":0}
+          xhr.send(JSON.stringify(data));
+          let res_headers = xhr.getResponseHeader('Server');
+          console.log(typeof res_headers);
+          // console.log(xhr);
+          xhr.onload = function(){
+              alert(`onload triggered, xhr state: ${xhr.status}`);
+              console.log(xhr.response)
+          }
+          xhr.onerror = function(){
+              alert('bad request')
+          }
+          xhr.onprogress = function(event){
+              alert(`loaded bytes: ${event.loaded}`); // downloaded bytes
+              alert(`total bytes: ${event.total}`)
+          }
+          xhr.onreadystatechange = function () {
+              if(xhr.readyState === 4){
+                    if(xhr.status === 200){
+                        console.log('Request successful');
+                    }
+                    else{
+                        alert('Request failed with status: ' + xhr.status);
+                    }
+              }
+          }
+
+      }
+  </script>
+
+  </body>
+</html>
