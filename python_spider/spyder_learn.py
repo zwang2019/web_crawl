@@ -1,4 +1,5 @@
 import requests
+from retrying import retry
 
 
 # # requests.get
@@ -107,12 +108,26 @@ import requests
 # print(response.text)
 #
 
-#
+# retry can be implemented in at least four ways.
+# 1. if/else
+# 2. try and if/else
+# 3. retry from requests library
+# 4. retrying library, it can retry the function when it raises an exception, and it can also set the number of retries and the delay between retries. !!!
 
+@retry(stop_max_attempt_number=3, wait_fixed=1000)    # stop_max_attempt_number: the maximum number of retries, wait_fixed: the delay between retries in milliseconds
+def parse_url(url):
+    '''
+    When timeout occurs, it will raise a requests.exceptions.Timeout exception, and the retrying library will catch this exception and retry the function.
+    :param url: text
+    :return: obj, response
+    '''
+    print('start request...')
+    response = requests.post(url, timeout=3)
+    assert response.status_code == 200, 'wrong status code'
+    return response
 
-
-
-
+res = parse_url('https://www.baidu.com')
+print(res.status_code)
 
 
 
