@@ -7,7 +7,7 @@ import requests
 # print('response.status_code:', response.status_code)
 # print('response.text:', response.text)
 # print('response.content:', response.content)    # download files like videos, pictures and musics...
-# print('response.content decoded:', response.content.decode('utf-8'))    # using response.content.decode('utf-8') to decode the data    # 处理中文乱码
+# print('response.content decoded:', response.content.decode('utf-8'))    # using response.content.decode('utf-8') to decode the data    # 处理中文乱码!!!
 # print('response.headers:', response.headers)
 # print('response.cookies:', response.cookies)
 # print('response.encoding:', response.encoding)
@@ -31,7 +31,7 @@ import requests
 # print(response)
 #
 #
-# # To simulate browser operations, need to add request headers.
+# # To simulate browser operations, need to add request headers. !!!
 # headers = {
 #     "accept" : "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
 #     "accept-encoding" : "gzip, deflate, br, zstd",
@@ -51,3 +51,67 @@ import requests
 # print('response with header: ', response)
 # print('response with header: ', response.text)
 #
+#
+# # request with cookie
+#
+#
+# cookies = {
+#     '__cfduid': 'dfaedafedasfeas',
+# }
+#
+# response = requests.get("https://www.baidu.com", cookies=cookies)
+# print('response with cookies: ', response)
+# print('response with cookies: ', response.text)
+#
+#
+# # session: session can save cookies, headers and other data, which can be used for multiple requests. !!!
+#
+# headers = {
+#     "accept" : "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+#     "accept-encoding" : "gzip, deflate, br, zstd",
+#     "accept-language" : "en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7",
+#     "cache-control" : "no-cache",
+#     "user-agent" : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
+# }
+#
+# session = requests.session()
+# res = session.get('https://www.baidu.com',headers=headers)
+# print('session cookies: ', res.cookies)
+# res_2 = session.post('https://www.baidu.com',headers=headers)
+# print('request headers: ', res_2.request.headers)
+#
+# print('convert cookies from cookiejar to dict: ', requests.utils.dict_from_cookiejar(res.cookies))
+#
+# res_3 = session.get('https://www.baidu.com',headers=headers,verify=False)   # verify=False can ignore SSL certificate verification, but it is not recommended to use it in production environment, because it will make your application vulnerable to man-in-the-middle attacks. !!!
+#
+
+# session proxy: hide
+proxies = {
+    "https" : "https://101.37.19.35:80",
+}
+response = requests.get('http://httpbin.org/ip',proxies=proxies, timeout=5)
+print(response.text)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
