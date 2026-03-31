@@ -31,7 +31,7 @@ import requests
 # print(response)
 #
 #
-# # To simulate browser operations, need to add request headers. !!!
+# To simulate browser operations, need to add request headers. !!!
 # headers = {
 #     "accept" : "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
 #     "accept-encoding" : "gzip, deflate, br, zstd",
@@ -50,6 +50,19 @@ import requests
 # response = requests.get("https://www.baidu.com", headers=headers)
 # print('response with header: ', response)
 # print('response with header: ', response.text)
+# print('#' * 500)
+#
+# # redirect
+# response_ar = requests.get("https://www.baidu.com", headers=headers, allow_redirects=True)
+# cookies_ar = response_ar.cookies
+#
+# print('cookie: ', cookies_ar)
+# print('text: ', response_ar.text)
+# print('code: ', response_ar.status_code)
+#
+# print('#' * 500)
+# response_no_ar = requests.get("https://www.bilibili.com", headers=headers, allow_redirects=False)
+# cookies_no_ar = response_no_ar.cookies
 #
 #
 # # request with cookie
@@ -84,16 +97,17 @@ import requests
 #
 # res_3 = session.get('https://www.baidu.com',headers=headers,verify=False)   # verify=False can ignore SSL certificate verification, but it is not recommended to use it in production environment, because it will make your application vulnerable to man-in-the-middle attacks. !!!
 #
+#
+# # session proxy: hide
+# proxies = {
+#     "http" : "http://8.138.131.110:3128",
+#     "https" : "https://8.138.131.110:3128",    # when using https, it returns real ip, because the website only support http, it only matches http proxy, so it will return real ip when using https. !!!
+# }
+# response = requests.get('http://httpbin.org/ip',proxies=proxies, timeout=5)
+# print(response.text)
+#
 
-# session proxy: hide
-proxies = {
-    "https" : "https://101.37.19.35:80",
-}
-response = requests.get('http://httpbin.org/ip',proxies=proxies, timeout=5)
-print(response.text)
-
-
-
+#
 
 
 
