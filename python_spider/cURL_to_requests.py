@@ -15,9 +15,9 @@ headers = {
     "Sec-Fetch-User": "?1",
     "Upgrade-Insecure-Requests": "1",
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
-    "sec-ch-ua": "\"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\"",
+    "sec-ch-ua": "Chromium;v=146, Not-A.Brand;v=24, Google Chrome;v=146",
     "sec-ch-ua-mobile": "?0",
-    "sec-ch-ua-platform": "\"Windows\""
+    "sec-ch-ua-platform": "Windows"
 }
 cookies = {
     "https_waf_cookie": "eb6c0e22-0e66-4972ae307d0ef776f3352145e4055622e5fa",
