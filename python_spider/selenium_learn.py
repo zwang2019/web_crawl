@@ -6,7 +6,7 @@
 # svc = Service(executable_path=CHROMEDRIVER_PATH)
 # browser = webdriver.Chrome(service=svc)
 
-from selenium.webdriver.chrome.webdriver import WebDriver
+from selenium.webdriver.chrome.webdriver import WebDriver   # using explicit import to solve _LAZY_IMPORTS causing IDE can't recognize the WebDriver class and its methods
 from selenium.webdriver.common.by import By
 import time
 
