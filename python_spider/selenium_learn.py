@@ -4,9 +4,10 @@
 # from selenium.webdriver.chrome.service import Service
 # CHROMEDRIVER_PATH = r'D:\Program\PyCharm 2025.3.3\bin\chromedriver.exe'
 # svc = Service(executable_path=CHROMEDRIVER_PATH)
-# browser = webdriver.Chrome(service=svc)
+# browser = WebDriver(service=svc)
 
 from selenium.webdriver.chrome.webdriver import WebDriver   # using explicit import to solve _LAZY_IMPORTS causing IDE can't recognize the WebDriver class and its methods
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -27,8 +28,12 @@ CLASS_NAME: ByType = "class name"
 CSS_SELECTOR: ByType = "css selector"
 """
 
+my_options = Options()
+my_options.add_argument('--disable-blink-features=AutomationControlled')
+my_options.add_experimental_option('excludeSwitches', ['enable-automation'])
+my_options.add_experimental_option('useAutomationExtension', False)
 
-browser = WebDriver()
+browser = WebDriver(options=my_options)
 browser.get("https://httpbin.org/")
 
 # wait
