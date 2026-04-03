@@ -6,9 +6,11 @@
 # svc = Service(executable_path=CHROMEDRIVER_PATH)
 # browser = webdriver.Chrome(service=svc)
 
-from selenium import webdriver
+from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 import time
+
+
 
 """
 By
@@ -23,7 +25,7 @@ CSS_SELECTOR: ByType = "css selector"
 """
 
 
-browser = webdriver.Chrome()
+browser = WebDriver()
 browser.get("https://httpbin.org/")
 res = browser.find_element(By.XPATH, "//div[1]/a[1]")
 print('element found...', res.text)
@@ -36,7 +38,6 @@ browser.find_element(By.XPATH, "//div[1]/a[1]").click()
 
 time.sleep(5)
 browser.get_screenshot_as_file('screenshot.png')
-
 
 
 
