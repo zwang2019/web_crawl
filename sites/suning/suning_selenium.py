@@ -5,6 +5,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 import time
+import json
+import csv
 
 my_options = Options()
 my_options.add_argument('--disable-blink-features=AutomationControlled')
@@ -54,9 +56,9 @@ def extract_values(browser):
 
     for i in range(len(book_name)):
         temp = {}
-        temp['name'] = book_name[i].text
-        temp['price'] = book_price[i].text
-        temp['shop'] = book_shop[i].text
+        temp['book_name'] = book_name[i].text
+        temp['book_price'] = book_price[i].text
+        temp['book_shop'] = book_shop[i].text
         book_list.append(temp)
 
     return book_list
@@ -67,10 +69,21 @@ if __name__ == '__main__':
 
     collect_url = r"https://list.suning.com/0-502282-0.html?safp=d488778a.46602.crumbs.2&safc=cate.0.0&safpn=10006.502282#search-path"
     bottom_line = 10600
-    collect_page = 3
+    collect_page = 5
+    book_id = 0
+    field_names = ['book_id', 'book_name', 'book_price', 'book_shop']
 
     browser = WebDriver(options=my_options)
     browser.get(collect_url)
+
+    # json problem:
+    with open('suning_book_list.json', 'a', encoding='utf-8') as f:
+        f.write('[' + '\n')
+
+    # csv
+    with open('suning_book_list.csv', 'a', encoding='utf-8-sig', newline='') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=field_names)
+        writer.writeheader()
 
     for page in range(collect_page):
 
@@ -83,12 +96,31 @@ if __name__ == '__main__':
 
         # extracted the value
         page_book_list = extract_values(browser)
-        print(page_book_list)
+
+        # save the data
+        # to JSON
+        print('saving to JSON...')
+        with open('suning_book_list.json', 'a', encoding='utf-8') as f:
+            for item in page_book_list:
+                f.write(json.dumps(item, indent=4, ensure_ascii=False) + ',' + '\n')
+
+        # to csv
+        print('saving to CSV...')
+        with open('suning_book_list.csv', 'a', encoding='utf-8-sig', newline='') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=field_names)
+            for item in page_book_list:
+                item['book_id'] = book_id
+                writer.writerow(item)
+                book_id += 1
+
         time.sleep(0.5)
 
         # move to next page
         browser.find_element(By.XPATH, '//a[@id="nextPage"]').click()
 
+    # json problem:
+    with open('suning_book_list.json', 'a', encoding='utf-8') as f:
+        f.write(']')
 
     print('program finished...')
     print('ending in 3 seconds...')
