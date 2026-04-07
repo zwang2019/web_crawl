@@ -5,14 +5,27 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 import time
+import sqlite3
+from pathlib import Path
 import json
 import csv
+
+import re
 
 my_options = Options()
 my_options.add_argument('--disable-blink-features=AutomationControlled')
 my_options.add_experimental_option('excludeSwitches', ['enable-automation'])
 my_options.add_experimental_option('useAutomationExtension', False)
 
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+DB_PATH = PROJECT_ROOT / "data" / "storage.db"
+
+def get_conn():
+    """
+    get connection to the database
+    :return: obj
+    """
+    return sqlite3.connect(DB_PATH)
 
 
 # scroll to the bottom
@@ -57,7 +70,7 @@ def extract_values(browser):
     for i in range(len(book_name)):
         temp = {}
         temp['book_name'] = book_name[i].text
-        temp['book_price'] = book_price[i].text
+        temp['book_price'] = re.findall(r"\d+\.?\d*", book_price[i].text)[0]
         temp['book_shop'] = book_shop[i].text
         book_list.append(temp)
 
@@ -69,7 +82,7 @@ if __name__ == '__main__':
 
     collect_url = r"https://list.suning.com/0-502282-0.html?safp=d488778a.46602.crumbs.2&safc=cate.0.0&safpn=10006.502282#search-path"
     bottom_line = 10600
-    collect_page = 5
+    collect_page = 50
     book_id = 0
     field_names = ['book_id', 'book_name', 'book_price', 'book_shop']
 
@@ -84,6 +97,10 @@ if __name__ == '__main__':
     with open('suning_book_list.csv', 'a', encoding='utf-8-sig', newline='') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=field_names)
         writer.writeheader()
+
+    # SQLite
+    conn = get_conn()
+    cursor = conn.cursor()
 
     for page in range(collect_page):
 
@@ -113,14 +130,33 @@ if __name__ == '__main__':
                 writer.writerow(item)
                 book_id += 1
 
-        time.sleep(0.5)
+        # to SQLite
+        print('saving to SQLite...')
+        try:
+            for item in page_book_list:
+                cursor.execute(f"""
+                INSERT INTO suning_books (book_name, book_price, book_shop)
+                VALUES (?, ?, ?)
+                ON CONFLICT(book_name, book_shop)
+                DO UPDATE SET
+                    book_price = EXCLUDED.book_price,
+                    created_at = CURRENT_TIMESTAMP
+                """, (item['book_name'], item['book_price'], item['book_shop']))
+            conn.commit()
+        except Exception as e:
+            print(f"Error occurred while inserting data into SQLite: {e}")
+            conn.rollback()
 
+        time.sleep(0.5)
         # move to next page
         browser.find_element(By.XPATH, '//a[@id="nextPage"]').click()
 
     # json problem:
     with open('suning_book_list.json', 'a', encoding='utf-8') as f:
         f.write(']')
+
+    # close connection
+    conn.close()
 
     print('program finished...')
     print('ending in 3 seconds...')
