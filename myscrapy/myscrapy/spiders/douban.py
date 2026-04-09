@@ -1,3 +1,5 @@
+from typing import AsyncIterator, Any
+
 import scrapy
 from ..items import MyscrapyItem
 
@@ -7,7 +9,13 @@ import re
 class DoubanSpider(scrapy.Spider):
     name = "douban"
     allowed_domains = ["douban.com"]
-    start_urls = ["https://movie.douban.com/top250"]
+    # start_urls = ["https://movie.douban.com/top250"]
+
+    async def start(self) -> AsyncIterator[Any]:
+        for i in range(10):
+            page_code = i * 25
+            url = f'https://movie.douban.com/top250?start={page_code}&filter='
+            yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
 
@@ -43,3 +51,5 @@ class DoubanSpider(scrapy.Spider):
             item['quotation'] = li.xpath('.//div[@class="bd"]/p[2]/span/text()').extract_first()
             # url
             item['link_url'] = li.xpath('.//div[@class="pic"]/a/@href').extract_first()
+
+            yield item
