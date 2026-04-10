@@ -24,7 +24,6 @@ class MyscrapyPipeline:
     def open_spider(self):
         """
         Execute before spider start. Connect to database and create table if not exist
-        :param spider:
         :return:
         """
         self.spider = self.crawler.spider
@@ -61,25 +60,50 @@ class MyscrapyPipeline:
 
 
     def process_item(self, item):
-
-        insert_sql = """
-            INSERT INTO douban_top_250 (title_cn, title_foreign, title_other, director, cast, year, country, genre, rating, reviews, quotation, link_url)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ON CONFLICT(link_url)
-            DO UPDATE SET 
-                title_cn      = excluded.title_cn,
-                title_foreign = excluded.title_foreign,
-                title_other   = excluded.title_other,
-                director      = excluded.director,
-                cast          = excluded.cast,
-                year          = excluded.year,
-                country       = excluded.country,
-                genre         = excluded.genre,
-                rating        = excluded.rating,
-                reviews       = excluded.reviews,
-                quotation     = excluded.quotation,
-                updated_at    = CURRENT_TIMESTAMP;
-            """
+        """
+        Insert or update data into database
+        :param item:
+        :return:
+        """
+        if self.spider.name == 'douban':
+            insert_sql = """
+                INSERT INTO douban_top_250 (title_cn, title_foreign, title_other, director, cast, year, country, genre, rating, reviews, quotation, link_url)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(link_url)
+                DO UPDATE SET 
+                    title_cn      = excluded.title_cn,
+                    title_foreign = excluded.title_foreign,
+                    title_other   = excluded.title_other,
+                    director      = excluded.director,
+                    cast          = excluded.cast,
+                    year          = excluded.year,
+                    country       = excluded.country,
+                    genre         = excluded.genre,
+                    rating        = excluded.rating,
+                    reviews       = excluded.reviews,
+                    quotation     = excluded.quotation,
+                    updated_at    = CURRENT_TIMESTAMP;
+                """
+            try:
+                self.cursor.execute(insert_sql,(
+                    item['title_cn'],
+                    item['title_foreign'],
+                    item['title_other'],
+                    item['director'],
+                    item['cast'],
+                    item['year'],
+                    item['country'],
+                    item['genre'],
+                    item['rating'],
+                    item['reviews'],
+                    item['quotation'],
+                    item['link_url']
+                ))
+                self.conn.commit()
+                print("douban_top_250 table inserted successfully.")
+            except Exception as e:
+                self.conn.rollback()
+                print(f"Insert failed: {e}")
 
         return item
 
@@ -87,9 +111,8 @@ class MyscrapyPipeline:
     def close_spider(self):
         """
         Execute after spider close
-        :param spider:
         :return:
         """
-
-
-        pass
+        if self.spider is not None:
+            if self.spider.name == 'douban':
+                self.conn.close()
