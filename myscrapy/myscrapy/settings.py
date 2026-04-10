@@ -39,7 +39,7 @@ DOWNLOAD_DELAY = 1
 DEFAULT_REQUEST_HEADERS = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
     "Accept-Encoding": "gzip, deflate, br, zstd",
-    "Accept-Language": "en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7"
+    "Accept-Language": "en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7",
     # "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
 }
 
@@ -51,8 +51,10 @@ DEFAULT_REQUEST_HEADERS = {
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
+# the number is priority, for request the smaller, the higher priority. for response, the larger, the higher priority.
 DOWNLOADER_MIDDLEWARES = {
     "myscrapy.middlewares.UserAgentDownloaderMiddleware": 543,
+    # "myscrapy.middlewares.ProxyDownloaderMiddleware": 544,
 }
 
 # Enable or disable extensions
@@ -63,7 +65,7 @@ DOWNLOADER_MIDDLEWARES = {
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-# the number is priority, 1 is the highest
+# for ITEM_PIPELINES: the number is priority, 1 is the highest
 ITEM_PIPELINES = {
     "myscrapy.pipelines.MyscrapyPipeline": 300,
 }

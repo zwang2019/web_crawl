@@ -87,6 +87,23 @@ class UserAgentDownloaderMiddleware:
         self.spider.logger.info("Spider opened: %s" % self.spider.name)
 
 
+class ProxyDownloaderMiddleware:
+    # Not all methods need to be defined. If a method is not defined,
+    # scrapy acts as if the downloader middleware does not modify the
+    # passed objects.
+
+
+    def process_request(self, request):
+        # Called for each request that goes through the downloader
+
+        # proxy setting
+        ip = '202.141.161.53:10808'
+        request.meta['proxy'] = ip
+        request.meta['download_timeout'] = 3
+
+        return None
+
+
 
 
 class MyscrapyTemplateDownloaderMiddleware:
