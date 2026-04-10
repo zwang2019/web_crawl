@@ -63,6 +63,7 @@ DEFAULT_REQUEST_HEADERS = {
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
+# the number is priority, 1 is the highest
 ITEM_PIPELINES = {
     "myscrapy.pipelines.MyscrapyPipeline": 300,
 }
