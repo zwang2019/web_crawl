@@ -24,7 +24,7 @@ class DoubanSpider(scrapy.Spider):
         for li in li:
             item = MyscrapyItem()
             # title
-            item['title_CN'] = li.xpath('.//div[@class="hd"]/a/span[@class="title"][1]/text()').extract_first()
+            item['title_cn'] = li.xpath('.//div[@class="hd"]/a/span[@class="title"][1]/text()').extract_first()
             title_foreign = li.xpath('.//div[@class="hd"]/a/span[@class="title"][2]/text()').extract_first()
             title_other = li.xpath('.//div[@class="hd"]/a/span[@class="other"]/text()').extract_first()
             item['title_foreign'] = text = re.sub(r'^\s*/?\s*', '', title_foreign) if title_foreign is not None else None

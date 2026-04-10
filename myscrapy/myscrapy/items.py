@@ -10,7 +10,7 @@ from pyasn1.type.univ import Null
 class MyscrapyItem(scrapy.Item):
     # define the fields for your item here like:
 
-    title_CN = scrapy.Field()
+    title_cn = scrapy.Field()
     title_foreign = scrapy.Field()
     title_other = scrapy.Field()
 
