@@ -116,3 +116,41 @@ class MyscrapyPipeline:
         if self.spider is not None:
             if self.spider.name == 'douban':
                 self.conn.close()
+
+
+# Pipeline Template
+class MyscrapyTemplatePipeline:
+
+    def __init__(self):
+        self.crawler = None
+        self.spider = None
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        pipeline = cls()
+        pipeline.crawler = crawler
+        return pipeline
+
+    def open_spider(self):
+        """
+        Execute before spider start.
+        :return:
+        """
+        # self.spider = self.crawler.spider
+        pass
+
+    def process_item(self, item):
+        """
+        Insert or update data into database
+        :param item:
+        :return: item
+        """
+
+        return item
+
+    def close_spider(self):
+        """
+        Execute after spider close
+        :return:
+        """
+        pass
