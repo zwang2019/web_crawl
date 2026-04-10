@@ -9,13 +9,13 @@ import re
 class DoubanSpider(scrapy.Spider):
     name = "douban"
     allowed_domains = ["douban.com"]
-    # start_urls = ["https://movie.douban.com/top250"]
+    start_urls = ["https://movie.douban.com/top250"]
 
-    async def start(self) -> AsyncIterator[Any]:
-        for i in range(10):
-            page_code = i * 25
-            url = f'https://movie.douban.com/top250?start={page_code}&filter='
-            yield scrapy.Request(url=url, callback=self.parse)
+    # async def start(self) -> AsyncIterator[Any]:
+    #     for i in range(10):
+    #         page_code = i * 25
+    #         url = f'https://movie.douban.com/top250?start={page_code}&filter='
+    #         yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
 
