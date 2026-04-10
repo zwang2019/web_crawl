@@ -7,6 +7,7 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 from scrapy.settings.default_settings import LOG_FILE, LOG_LEVEL
+import time
 
 BOT_NAME = "myscrapy"
 
@@ -25,6 +26,7 @@ ROBOTSTXT_OBEY = False
 # Concurrency and throttling settings
 #CONCURRENT_REQUESTS = 16
 CONCURRENT_REQUESTS_PER_DOMAIN = 1
+# CONCURRENT_REQUESTS_PER_IP = 1
 DOWNLOAD_DELAY = 1
 
 # Disable cookies (enabled by default)
@@ -92,4 +94,5 @@ FEED_EXPORT_ENCODING = "utf-8"
 
 # Log settings
 LOG_LEVEL = "INFO"    # DEBUG -> for developing    # INFO -> for working information    # WARNING -> for warning    # ERROR -> for error    # CRITICAL -> for critical error
-LOG_FILE = r"./logs/scrapy.log"
+current_time = time.strftime("%Y-%m-%d-%H_%M_%S", time.localtime(time.time()))
+LOG_FILE = rf"./logs/spider_run_{current_time}.log"
