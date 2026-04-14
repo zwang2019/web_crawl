@@ -7,6 +7,7 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
+import sys
 
 
 class Ui_MainWindow(object):
@@ -77,6 +78,8 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+        self.search_button.clicked.connect(MainWindow.search_music)
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -87,11 +90,28 @@ class Ui_MainWindow(object):
         self.menuFile.setTitle(_translate("MainWindow", "File"))
 
 
+class MyWindow(QtWidgets.QMainWindow):
+
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle("QT Learn")
+        self.setWindowIcon(QtGui.QIcon(r"./icon/spider.png"))
+
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
+
+    def search_music(self):
+
+        search_text = self.ui.search_bar.text()
+        print(search_text)
+
+
+
+
 if __name__ == "__main__":
-    import sys
+
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
+    MainWindow = MyWindow()
     MainWindow.show()
     sys.exit(app.exec())
