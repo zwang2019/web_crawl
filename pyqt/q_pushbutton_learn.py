@@ -1,6 +1,7 @@
+from PyQt6.QtGui import QIcon, QFont
+from PyQt6.QtWidgets import QApplication, QWidget, QMainWindow, QDialog, QStatusBar, QPushButton
 from PyQt6.QtGui import QIcon
-from PyQt6.QtWidgets import QApplication, QWidget, QMainWindow, QDialog, QStatusBar
-from PyQt6.QtGui import QIcon
+from PyQt6.QtCore import QSize
 import sys
 
 
@@ -13,7 +14,7 @@ class MyWindow(QMainWindow):
         self.setWindowIcon(QIcon(r"./icon/spider.png"))
         self.setGeometry(200, 200, 1920, 1080)
 
-        self.setStyleSheet('background-color: #81D8CF')
+        # self.setStyleSheet('background-color: #81D8CF')
 
         self.statusBar().showMessage("Spyder Learn")
         file = self.menuBar().addMenu("File")
@@ -25,7 +26,19 @@ class MyWindow(QMainWindow):
         self.menuBar().addMenu("Edit")
         self.menuBar().addMenu("Help")
 
+        self.creat_button()
 
+
+
+    def creat_button(self):
+        btn = QPushButton('Click', self)
+        btn.setGeometry(100, 100, 200, 50)
+
+
+        btn.setFont(QFont('Times New Roman', 20, QFont.Weight.Bold))
+
+        btn.setIcon(QIcon(r"./icon/snake.jpg"))
+        btn.setIconSize(QSize(60, 34))
 
 
 
@@ -37,6 +50,3 @@ if __name__ == "__main__":
     window.show()
 
     sys.exit(app.exec())
-
-
-
