@@ -19,6 +19,6 @@ JSON = {
 
 j_s = '{"name": "alice"}'
 
-console.log("Result of JSON.parse:", JSON.parse(j_s));
+console.log("Result of JSON.parse: ", JSON.parse(j_s));
 
 
