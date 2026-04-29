@@ -101,6 +101,131 @@ setTimeout = function(){};
 })();
 
 /* -------------------------------------------------------------------------------------*/
+// break constructor debugger: when website using this method
+(function(){
+    Function.prototype.__constructor_back = Function.prototype.constructor;
+    Function.prototype.constructor = function () {
+        if (arguments && typeof arguments[0] === 'string' && arguments[0].indexOf('debugger') !== -1) {
+            console.log("Hooked Function constructor called with argument:", arguments[0]);
+            return
+        }
+        return Function.prototype.__constructor_back.apply(this, arguments);
+    };
+})();
+
+// or
+
+Function.prototype.constructor = function(){};
+
+/* -------------------------------------------------------------------------------------*/
+// break infinitely debugger
+setInterval = function(){};
+
+//or
+
+my_interval = setInterval
+setInterval = function (a, b){
+    if (a.toString().indexOf('debugger') === -1) {
+        console.log('');
+        return my_interval(a, b);
+    }
+}
+
+// or
+
+for (let i=1;i<99999;i++){
+    window.clearInterval(i);
+}
+
+/* -------------------------------------------------------------------------------------*/
+// break Function debugger
+(function(){
+    Function.prototype.__constructor = Function;
+    Function = function (){
+        if (arguments && typeof arguments[0] === 'string' && arguments[0].indexOf('debugger') !== -1){
+            return;
+        }
+        return Function.prototype.__constructor.apply(this, arguments);
+    };
+})();
+
+/* -------------------------------------------------------------------------------------*/
+// break eval loading JS string debugger
+(function(){
+    my_eval = eval;
+    eval = function(text){
+        if (text === '(function() {var a = new Date(); debugger; return new Date() - a > 100;}())'){  //input whatever the website load e.g.
+            return null;
+        }
+        else {
+            return my_eval(text);
+        }
+    };
+})();
+
+
+/* -------------------------------------------------------------------------------------*/
+// remove rs6 3-layers debugger
+;(function () {
+  'use strict'
+  const oEval = window.eval
+  const oFunction = window.Function
+  const handleArgs = (args, last) => {
+    if (!args?.length) return
+    const ind = last ? args.length - 1 : 0
+    if (!args[ind]?.replaceAll) return
+    args[ind] = args[ind].replaceAll(/\bdebugger\b/g, ';/*debugger*/;')
+  }
+  window._original_eval = oEval
+  window._original_Function = oFunction
+  window.eval = new Proxy(oEval, {
+    apply(target, thisArg, argArray) {
+      handleArgs(argArray, false)
+      return target.apply(thisArg, argArray)
+    }
+  })
+  window.Function = new Proxy(oFunction, {
+    apply(target, thisArg, argArray) {
+      handleArgs(argArray, true)
+      return target.apply(thisArg, argArray)
+    },
+    construct(target, argArray, newTarget) {
+      handleArgs(argArray, true)
+      return new target(...argArray)
+    }
+  })
+  oFunction.prototype.constructor = window.Function
+}());
+
+// can add break constructor debugger code as backup
+
+/* -------------------------------------------------------------------------------------*/
+// hook window.close
+(function() {
+    'use strict';
+    window.close = function(s){
+        debugger;
+        window.close = '';
+        return null;
+    }
+    history.back = function(){
+        debugger;
+        history.back  = '';
+        return null;
+    }
+    Object.defineProperty(window, 'close', {
+        value: window.close,
+        writable: false,
+        configurable: false
+    });
+    Object.defineProperty(window, 'history', {
+        value: window.history,
+        writable: false,
+        configurable: false
+    });
+})();
+
+
 
 
 
