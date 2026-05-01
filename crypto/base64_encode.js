@@ -2,6 +2,9 @@ const Crypto = require('crypto-js');
 
 // image to base64 string, string to image
 
+
+/* -------------------------------------------------------------------------------------*/
+// node-js method
 var a = 'alice' ;
 
 var b = Buffer.from(a, 'utf-8').toString('base64');
@@ -10,6 +13,8 @@ console.log(b);
 var c = Buffer.from(b, 'base64').toString('utf-8');
 console.log(c);
 
+/* -------------------------------------------------------------------------------------*/
+// hand-writen base64
 
 function encode64(input) {
   var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
@@ -40,4 +45,21 @@ function encode64(input) {
 }
 
 pwd = encode64('alice');
-console.log('password is ', pwd)
+console.log('password is ', pwd);
+
+/* -------------------------------------------------------------------------------------*/
+// Crypto-js encode and decode
+
+my_text = 'hello'
+word_array = Crypto.enc.Utf8.parse(my_text)
+console.log(`word_array ${my_text} is: `, word_array)
+
+my_base = Crypto.enc.Base64.stringify(word_array);
+console.log(`base64 ${my_text} is `, my_base);
+
+parse_base64 = Crypto.enc.Base64.parse(my_base);
+console.log('parse base64 is: ', parse_base64);
+
+original = Crypto.enc.Utf8.stringify(parse_base64);
+console.log('original text is: ', original);
+
