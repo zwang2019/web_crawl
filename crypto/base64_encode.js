@@ -2,7 +2,7 @@ const Crypto = require('crypto-js');
 
 // image to base64 string, string to image
 
-var a = 'alice';
+var a = 'alice' ;
 
 var b = Buffer.from(a, 'utf-8').toString('base64');
 console.log(b);
