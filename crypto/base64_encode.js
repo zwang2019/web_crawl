@@ -50,7 +50,7 @@ console.log('password is ', pwd);
 /* -------------------------------------------------------------------------------------*/
 // Crypto-js encode and decode
 
-my_text = 'hello'
+my_text = '123456'
 word_array = Crypto.enc.Utf8.parse(my_text)
 console.log(`word_array ${my_text} is: `, word_array)
 
@@ -63,3 +63,4 @@ console.log('parse base64 is: ', parse_base64);
 original = Crypto.enc.Utf8.stringify(parse_base64);
 console.log('original text is: ', original);
 
+// base64 123456 is  MTIzNDU2
