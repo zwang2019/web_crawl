@@ -6,6 +6,12 @@ def md5(text):
     return m.hexdigest()
 
 
+def sha256(text):
+    m = hashlib.sha256()
+    m.update(text.encode('utf-8'))
+    return m.hexdigest()
+
 
 text = '123456'
 print(f'md5 of {text} is {md5(text)}')
+print(f'sha256 of {text} is {sha256(text)}')
