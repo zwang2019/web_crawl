@@ -35,3 +35,5 @@ aes_encrypted = Crypto.AES.encrypt(text, aes_key,
     ).toString();
 
 console.log(`AES encrypted text is: ${aes_encrypted}`);
+
+// mode: ECB parallel padding leakage, CBC padding sequential, CFB no pad sequential, CTR no pad parallel .
