@@ -44,4 +44,26 @@ Promise.all([p1, p2]).then((res) => {console.log(res)});
 Promise.race([p1, p2]).then((res) => {console.log(res)});
 
 /* -------------------------------------------------------------------------------------*/
+// Candy
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
+async function task1(){
+    await sleep(5000);
+    return 'task 1 finished'
+}
+
+async function task2(){
+    await sleep(6000);
+    return 'task 2 finished'
+}
+
+async function mock_task() {
+    console.time('time spend');
+    const [res1, res2] = await Promise.all([task1(), task2()])
+    console.log(res1);
+    console.log(res2);
+    console.timeEnd('time spend');
+}
+mock_task();
