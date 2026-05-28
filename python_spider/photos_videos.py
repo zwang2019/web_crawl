@@ -62,3 +62,23 @@ with open('test_2.jpeg', 'wb') as picsave:
     picsave.write(test_image)
 print(test_image)
 
+########################################################################################################################################################################################################
+# m3u8 videos
+'''
+1. request m3u8 file
+2. check EXT-X-KEY
+3. download ts file, decrypt ts file, save to one folder
+4. bytes mode open one file (wb), write all ts file to one file, save as mp4
+'''
+
+
+
+
+
+
+
+
+
+
+
+
